@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI for Data Science</title>
+<style>
+:root {
+  --bg: #0b0e14;
+  --surface: #13181f;
+  --surface2: #1a2130;
+  --border: #1e2a3a;
+  --gold: #e8a020;
+  --gold-bright: #f5c347;
+  --gold-dim: rgba(232,160,32,0.15);
+  --text: #dde6f0;
+  --muted: #6b7d90;
+  --dim: #3a4a5a;
+  --code-bg: #090c10;
+  --green: #3fb950;
+  --blue: #58a6ff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Grid overlay ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(232,160,32,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,160,32,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Progress bar ── */
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; background: var(--gold);
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  z-index: 200;
+  box-shadow: 0 0 12px var(--gold);
+}
+
+/* ── Section label ── */
+#section-label {
+  position: fixed; top: 1.6rem; left: 2.5rem;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); z-index: 200;
+  transition: opacity 0.3s;
+}
+
+/* ── Navigation ── */
+#nav {
+  position: fixed; bottom: 2rem; right: 2.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  z-index: 200;
+}
+
+#counter {
+  font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.08em; font-variant-numeric: tabular-nums;
+  min-width: 3.5rem; text-align: center;
+}
+
+.nav-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s ease;
+  outline: none;
+}
+.nav-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* ── Slides container ── */
+#slides {
+  position: relative; width: 100%; height: 100%;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 5rem 7rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
+  transform: translateX(50px);
+  z-index: 1;
+}
+.slide.active {
+  opacity: 1; pointer-events: all; transform: translateX(0);
+}
+.slide.exit {
+  opacity: 0; transform: translateX(-50px); z-index: 0;
+}
+
+/* ── Typography ── */
+.eyebrow {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.2rem;
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: -0.03em; color: var(--text);
+  text-transform: uppercase;
+}
+
+h1 .accent { color: var(--gold); }
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.025em; color: var(--text);
+  margin-bottom: 2rem;
+}
+h2 .accent { color: var(--gold); }
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--muted); margin-top: 1.2rem;
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+
+/* ── Bullet list ── */
+.bullets {
+  list-style: none; width: 100%; max-width: 720px;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.bullets li {
+  display: flex; align-items: flex-start; gap: 1rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  line-height: 1.5; color: var(--text);
+}
+.bullets li::before {
+  content: ''; display: block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); margin-top: 0.55em;
+  flex-shrink: 0;
+}
+.bullets li strong { color: var(--gold-bright); font-weight: 600; }
+.bullets li .dim { color: var(--muted); font-size: 0.88em; }
+
+/* ── Before/After ── */
+.compare {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; width: 100%; max-width: 860px;
+  margin-top: 0.5rem;
+}
+.compare-box {
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.75rem;
+  background: var(--surface);
+  position: relative; overflow: hidden;
+}
+.compare-box::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+}
+.compare-box.before::before { background: var(--dim); }
+.compare-box.after::before { background: var(--gold); }
+
+.compare-label {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1rem;
+}
+.compare-box.after .compare-label { color: var(--gold); }
+
+.compare-box p {
+  font-size: 0.92rem; line-height: 1.65; color: var(--text);
+}
+.compare-box code {
+  font-family: "Courier New", monospace;
+  font-size: 0.82rem; color: var(--blue);
+  background: var(--code-bg);
+  padding: 0.15em 0.4em; border-radius: 3px;
+  display: block; margin: 0.5rem 0;
+  line-height: 1.6;
+}
+.compare-box.after code { color: var(--green); }
+
+/* ── Code block ── */
+.code-block {
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.5rem 2rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem; line-height: 1.8;
+  color: var(--text); width: 100%; max-width: 680px;
+  position: relative; margin-top: 1rem;
+}
+.code-block .cmt { color: var(--muted); }
+.code-block .key { color: var(--gold); font-weight: 600; }
+.code-block .val { color: var(--green); }
+.code-block .hdr { color: var(--blue); font-weight: 700; }
+
+/* ── Pipeline diagram ── */
+.pipeline {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0; width: 100%;
+  max-width: 700px;
+}
+
+.pipe-node {
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 2rem;
+  text-align: center; position: relative;
+  background: var(--surface);
+  width: 100%;
+}
+.pipe-node.primary { border-color: var(--gold); background: rgba(232,160,32,0.08); }
+.pipe-node .node-label {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.3rem;
+}
+.pipe-node .node-label.dim { color: var(--muted); }
+.pipe-node .node-name {
+  font-size: 0.95rem; font-weight: 700; color: var(--text);
+}
+.pipe-node .node-sub {
+  font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem;
+}
+
+.pipe-arrow {
+  width: 1px; height: 24px;
+  background: var(--border); position: relative;
+}
+.pipe-arrow::after {
+  content: '▼'; position: absolute;
+  bottom: -8px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5rem; color: var(--dim);
+}
+
+.pipe-parallel {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem; width: 100%;
+}
+.pipe-parallel .pipe-node { width: 100%; padding: 0.85rem 1rem; }
+.pipe-parallel .node-name { font-size: 0.82rem; }
+
+.pipe-parallel-arrows {
+  display: flex; justify-content: space-around;
+  width: 100%; position: relative; height: 28px;
+}
+.pipe-parallel-arrows::before {
+  content: ''; position: absolute;
+  top: 0; left: 16.67%; right: 16.67%;
+  height: 1px; background: var(--border);
+}
+.pipe-parallel-arrows .arm {
+  width: 1px; height: 28px;
+  background: var(--border); position: relative;
+}
+.pipe-parallel-arrows .arm::after {
+  content: '▼'; position: absolute;
+  bottom: -6px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.45rem; color: var(--dim);
+}
+
+.pipe-output {
+  font-size: 0.8rem; color: var(--green);
+  font-family: "Courier New", monospace;
+  margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.pipe-output::before { content: '→'; color: var(--dim); }
+
+/* ── Terminal block ── */
+.terminals {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.25rem; width: 100%; max-width: 860px;
+  margin-top: 1rem;
+}
+.terminal {
+  background: #050709; border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+.terminal-bar {
+  background: var(--surface); padding: 0.6rem 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.terminal-bar .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.terminal-title {
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.1em; margin-left: 0.5rem;
+}
+.terminal-body {
+  padding: 1rem 1.25rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem; line-height: 1.8;
+}
+.t-prompt { color: var(--gold); }
+.t-cmd { color: var(--text); }
+.t-out { color: var(--green); }
+.t-out2 { color: var(--muted); }
+.t-active { color: var(--blue); }
+
+/* ── Callout ── */
+.callout {
+  border: 1px solid var(--gold);
+  border-radius: 8px; padding: 1.25rem 1.75rem;
+  background: var(--gold-dim); max-width: 720px;
+  font-size: 0.95rem; line-height: 1.7;
+  margin-top: 1.5rem; width: 100%;
+}
+.callout strong { color: var(--gold-bright); }
+
+/* ── Exercise prompt ── */
+.prompt-box {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.75rem 2rem; background: var(--surface);
+  max-width: 720px; width: 100%; margin-top: 1.5rem;
+  position: relative; overflow: hidden;
+}
+.prompt-box::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold);
+}
+.prompt-box .prompt-label {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.prompt-box p {
+  font-family: "Courier New", monospace;
+  font-size: 0.88rem; line-height: 1.75; color: var(--text);
+}
+
+/* ── Discussion grid ── */
+.discussion {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; width: 100%; max-width: 820px;
+  margin-top: 1rem;
+}
+.q-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.25rem 1.5rem; background: var(--surface);
+}
+.q-num {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem;
+}
+.q-card p { font-size: 0.88rem; line-height: 1.5; color: var(--text); }
+
+/* ── Section break ── */
+.slide-break {
+  background: var(--bg);
+}
+.slide-break .big-number {
+  font-size: clamp(8rem, 20vw, 16rem);
+  font-weight: 900; line-height: 1;
+  color: var(--surface2);
+  letter-spacing: -0.05em;
+  position: absolute;
+  left: 5rem; bottom: 2rem;
+  pointer-events: none; user-select: none;
+}
+
+/* ── Takeaway cards ── */
+.takeaway-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem; width: 100%; max-width: 820px;
+  margin-top: 1rem;
+}
+.t-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.5rem; background: var(--surface);
+  text-align: center;
+}
+.t-card .t-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.t-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--gold-bright); margin-bottom: 0.5rem; }
+.t-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* ── Sub-agent diagram ── */
+.agent-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem; width: 100%; max-width: 860px;
+  margin-top: 1rem;
+}
+.a-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.25rem; background: var(--surface);
+  position: relative; overflow: hidden;
+}
+.a-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--dim);
+}
+.a-card.highlight::before { background: var(--gold); }
+.a-card .a-num {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.5rem;
+}
+.a-card.highlight .a-num { color: var(--gold); }
+.a-card h3 { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.a-card p { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+
+/* ── Centered layout helpers ── */
+.slide-content { width: 100%; max-width: 900px; }
+.gap-sm { height: 0.75rem; }
+.gap-md { height: 1.5rem; }
+.gap-lg { height: 2.5rem; }
+.text-center { text-align: center; }
+.flex-col { display: flex; flex-direction: column; align-items: center; }
+
+/* ── Decoration line ── */
+.deco-line {
+  width: 48px; height: 2px;
+  background: var(--gold);
+  margin: 1.2rem 0;
+}
+.deco-line.center { margin: 1.2rem auto; }
+
+/* ── Slide 1 specific ── */
+.slide-1-inner {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.slide-1-tag {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 2rem;
+}
+.slide-1 h1 { font-size: clamp(3.5rem, 9vw, 7.5rem); }
+.slide-1 .from {
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  color: var(--muted); margin-top: 1.5rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+.slide-1 .arrow-line {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+.slide-1 .arrow-line span { color: var(--text); font-weight: 600; letter-spacing: 0.05em; }
+.slide-1 .arrow-line .arr { color: var(--gold); font-size: 1.5rem; }
+
+.corner-deco {
+  position: absolute; bottom: 3rem; right: 3.5rem;
+  text-align: right;
+  font-size: 0.65rem; color: var(--dim);
+  letter-spacing: 0.1em; line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="section-label"></div>
+
+<div id="slides">
+
+  <!-- ───────────────────────── SLIDE 1 — TITLE ───────────────────────── -->
+  <div class="slide slide-1 active" data-section="">
+    <div class="slide-1-inner">
+      <div class="slide-1-tag">Data Science · Spring 2026</div>
+      <h1><span class="accent">Agentic AI</span><br>for Data Science</h1>
+      <div class="deco-line center"></div>
+      <div class="from">From</div>
+      <div class="arrow-line">
+        <span>Prompt</span>
+        <span class="arr">→</span>
+        <span>Pipeline</span>
+      </div>
+    </div>
+    <div class="corner-deco">
+      SEC Women's Basketball<br>Tournament Analysis<br>Multi-Agent Demo
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 2 — WHAT IS CLAUDE CODE ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content">
+      <div class="eyebrow">What is Claude Code?</div>
+      <h2>Not a copilot.<br>An <span class="accent">agent</span>.</h2>
+      <ul class="bullets">
+        <li><strong>CLI tool</strong> that reads your codebase, plans, and acts</li>
+        <li><strong>Writes code, runs commands, iterates</strong> — without step-by-step instruction</li>
+        <li>Reads <strong>CLAUDE.md</strong> at startup to understand your project</li>
+        <li>Uses tools: file read/write, bash, web search, sub-agents</li>
+        <li>Works on the task <strong>until it's done</strong> — not just the next line</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 3 — THE SHIFT ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content">
+      <div class="eyebrow">The Shift</div>
+      <h2>From <span class="accent">writing code</span><br>to directing agents</h2>
+      <div class="compare">
+        <div class="compare-box before">
+          <div class="compare-label">Before</div>
+          <p>You write a scraper. Then a cleaner. Then a transformer. Debug each one. Wire them together.</p>
+          <code>def scrape_stats(url):<br>&nbsp;&nbsp;# 80 lines later...</code>
+          <p>Hours of implementation for a one-time analysis.</p>
+        </div>
+        <div class="compare-box after">
+          <div class="compare-label">After</div>
+          <p>You describe what you need. Claude Code builds, runs, and iterates — showing its work.</p>
+          <code>claude "scrape SEC women's<br>basketball stats and clean<br>for tournament analysis"</code>
+          <p>Minutes. Auditable. Reusable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 4 — SUB-AGENTS ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content">
+      <div class="eyebrow">Sub-Agents</div>
+      <h2>One prompt.<br><span class="accent">Multiple specialists</span>.</h2>
+      <div class="agent-grid">
+        <div class="a-card highlight">
+          <div class="a-num">Orchestrator</div>
+          <h3>Main Agent</h3>
+          <p>Reads CLAUDE.md, plans the pipeline, spawns and coordinates children</p>
+        </div>
+        <div class="a-card">
+          <div class="a-num">Sub-Agent A</div>
+          <h3>Specialist</h3>
+          <p>Focused task, isolated context window, writes output to a file</p>
+        </div>
+        <div class="a-card">
+          <div class="a-num">Sub-Agent B</div>
+          <h3>Specialist</h3>
+          <p>Runs in parallel with A, separate context — no interference</p>
+        </div>
+        <div class="a-card">
+          <div class="a-num">Sub-Agent C</div>
+          <h3>Synthesizer</h3>
+          <p>Runs after A and B, reads their output files, produces final report</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1.25rem">
+        Each sub-agent gets a <strong>focused prompt</strong> and its own context — so the analysis stays sharp and doesn't blur across tasks.
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 5 — WHY MULTI-AGENT ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content">
+      <div class="eyebrow">Why Multi-Agent?</div>
+      <h2>Three reasons it<br><span class="accent">outperforms</span> one big prompt</h2>
+      <ul class="bullets" style="max-width:660px; margin-top: 0.5rem">
+        <li>
+          <div>
+            <strong>Parallelism</strong> — agents run simultaneously, wall time drops<br>
+            <span class="dim">Team profiling, matchup analysis, and upset detection all happen at once</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Specialization</strong> — each agent has one job, done deeply<br>
+            <span class="dim">A matchup analyst isn't distracted by narrative concerns</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Composability</strong> — the pattern transfers to any problem<br>
+            <span class="dim">Point the same architecture at sales data, clinical trials, financial reports</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 6 — CLAUDE.MD PATTERN ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content">
+      <div class="eyebrow">The Pattern</div>
+      <h2><span class="accent">CLAUDE.md</span> replaces<br>orchestration code</h2>
+      <div class="code-block">
+        <span class="hdr">## Agent Architecture</span><br><br>
+        <span class="key">### Sub-Agent 1 — Data Gatherer</span><br>
+        <span class="cmt">**Inputs:** sec_teams.csv, bracket.json</span><br>
+        <span class="cmt">**Outputs:** Write to output/data_audit.md</span><br><br>
+        <span class="key">### Sub-Agent 2 — Team Profiler (parallel)</span><br>
+        <span class="cmt">**Outputs:** Write to output/team_profiles.md</span><br><br>
+        <span class="key">### Sub-Agent 5 — Narrative (runs last)</span><br>
+        <span class="cmt">**Inputs:** Read output/team_profiles.md ...</span><br>
+        <span class="cmt">**Outputs:** Write output/tournament_preview.md</span>
+      </div>
+      <ul class="bullets" style="max-width: 660px; margin-top:1.25rem">
+        <li>Markdown file — no Python orchestration code</li>
+        <li>Define roles, data paths, output expectations</li>
+        <li><strong>Portable</strong> — swap the dataset, keep the architecture</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 7 — TAKEAWAYS ───────────────────────── -->
+  <div class="slide" data-section="Part A — Claude Code">
+    <div class="slide-content flex-col text-center">
+      <div class="eyebrow">What You'll Take Away</div>
+      <h2>Tools you can use<br><span class="accent">next week</span></h2>
+      <div class="takeaway-grid">
+        <div class="t-card">
+          <div class="t-icon">📄</div>
+          <h3>The CLAUDE.md File</h3>
+          <p>The full pipeline definition — point it at any dataset and reuse the same architecture</p>
+        </div>
+        <div class="t-card">
+          <div class="t-icon">🔁</div>
+          <h3>The Pattern</h3>
+          <p>Sequential → Parallel → Sequential. Works for any multi-step analysis problem</p>
+        </div>
+        <div class="t-card">
+          <div class="t-icon">🧪</div>
+          <h3>Critical Instincts</h3>
+          <p>Where AI analysis goes wrong, what questions to ask, how to evaluate outputs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 8 — SECTION BREAK ───────────────────────── -->
+  <div class="slide slide-break" data-section="">
+    <div class="slide-1-inner">
+      <div class="slide-1-tag">Part B — Live Demo</div>
+      <h1>Let's<br><span class="accent">Build It</span><br>Live.</h1>
+      <div class="deco-line center"></div>
+      <p class="subtitle">SEC Women's Basketball Tournament<br>Five agents. One prompt. A publishable preview.</p>
+    </div>
+    <div class="big-number">B</div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 9 — THE PROBLEM ───────────────────────── -->
+  <div class="slide" data-section="Part B — Live Demo">
+    <div class="slide-content">
+      <div class="eyebrow">The Problem</div>
+      <h2>Raw data →<br><span class="accent">Publishable preview</span></h2>
+      <ul class="bullets" style="max-width: 680px">
+        <li><strong>Input:</strong> sec_teams.csv — 16 teams, 17 advanced metrics each</li>
+        <li><strong>Input:</strong> bracket.json — tournament seedings and matchup structure</li>
+        <li><strong>Output:</strong> Full tournament preview — team profiles, matchup picks, upsets, Final Four</li>
+        <li><strong>One prompt</strong> triggers the entire pipeline</li>
+      </ul>
+      <div class="callout">
+        <strong>The constraint:</strong> no custom Python. No orchestration script. The only "code" is a markdown file.
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 10 — ARCHITECTURE ───────────────────────── -->
+  <div class="slide" data-section="Part B — Live Demo">
+    <div class="slide-content flex-col">
+      <div class="eyebrow">Pipeline Architecture</div>
+      <div class="pipeline">
+        <!-- Agent 1 -->
+        <div class="pipe-node primary">
+          <div class="node-label">Sequential · Phase 1</div>
+          <div class="node-name">Agent 1 — Data Gatherer &amp; Cleaner</div>
+          <div class="node-sub">Validates stats, confirms seedings, audits data quality</div>
+        </div>
+
+        <!-- Arrow down to parallel -->
+        <div class="pipe-parallel-arrows">
+          <div class="arm"></div>
+          <div class="arm"></div>
+          <div class="arm"></div>
+        </div>
+
+        <!-- Agents 2, 3, 4 parallel -->
+        <div class="pipe-parallel">
+          <div class="pipe-node">
+            <div class="node-label dim">Parallel · Phase 2</div>
+            <div class="node-name">Agent 2</div>
+            <div class="node-sub">Team Profiler</div>
+          </div>
+          <div class="pipe-node">
+            <div class="node-label dim">Parallel · Phase 2</div>
+            <div class="node-name">Agent 3</div>
+            <div class="node-sub">Matchup Analyst</div>
+          </div>
+          <div class="pipe-node">
+            <div class="node-label dim">Parallel · Phase 2</div>
+            <div class="node-name">Agent 4</div>
+            <div class="node-sub">Upset Detector</div>
+          </div>
+        </div>
+
+        <!-- Arrow down to Agent 5 -->
+        <div class="pipe-arrow"></div>
+
+        <!-- Agent 5 -->
+        <div class="pipe-node primary">
+          <div class="node-label">Sequential · Phase 3</div>
+          <div class="node-name">Agent 5 — Narrative &amp; Reporting</div>
+          <div class="node-sub">Reads all three outputs, synthesizes the final preview</div>
+        </div>
+
+        <!-- Output -->
+        <div class="pipe-output">output/tournament_preview.md</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 11 — FOLLOW ALONG ───────────────────────── -->
+  <div class="slide" data-section="Part B — Live Demo">
+    <div class="slide-content">
+      <div class="eyebrow">Follow Along</div>
+      <h2>Open <span class="accent">two terminals</span></h2>
+      <div class="terminals">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <div class="terminal-title">Terminal 1 — Claude Code</div>
+          </div>
+          <div class="terminal-body">
+            <span class="t-prompt">$ </span><span class="t-cmd">claude -p "Run the full<br>&nbsp;&nbsp;SEC pipeline..."</span><br><br>
+            <span class="t-active">◆ Sub-Agent 1 running...</span><br>
+            <span class="t-out">✓ data_audit.md written</span><br>
+            <span class="t-active">◆ Agents 2, 3, 4 running...</span><br>
+            <span class="t-out2">→ watch the right terminal</span>
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <div class="terminal-title">Terminal 2 — Output Watcher</div>
+          </div>
+          <div class="terminal-body">
+            <span class="t-prompt">$ </span><span class="t-cmd">watch -n 1 ls -lh output/</span><br><br>
+            <span class="t-out2">8.6K data_audit.md</span><br>
+            <span class="t-out">36K team_profiles.md</span><br>
+            <span class="t-out">38K matchup_analysis.md</span><br>
+            <span class="t-active">↻ upset_report.md ...</span>
+          </div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1rem">
+        Watch files appear in real time as each agent completes — this is the pipeline becoming visible.
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 12 — STUDENT EXERCISE ───────────────────────── -->
+  <div class="slide" data-section="Part B — Live Demo">
+    <div class="slide-content flex-col">
+      <div class="eyebrow">Student Exercise</div>
+      <h2>Your turn.<br><span class="accent">Same architecture.</span><br>Different question.</h2>
+      <div class="prompt-box">
+        <div class="prompt-label">Your Prompt</div>
+        <p>"Using the agent architecture in CLAUDE.md, analyze which SEC team is most dangerous as a low seed and make the case for them as a dark horse Final Four pick."</p>
+      </div>
+      <ul class="bullets" style="max-width: 680px; margin-top: 1.25rem">
+        <li>Same CLAUDE.md. Same data. Different framing.</li>
+        <li>Run it yourself — compare outputs with the group</li>
+        <li><strong>The variation is the lesson:</strong> prompt framing shapes conclusions</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── SLIDE 13 — DISCUSSION ───────────────────────── -->
+  <div class="slide" data-section="Part B — Live Demo">
+    <div class="slide-content">
+      <div class="eyebrow">Discussion</div>
+      <h2>Before you leave —<br><span class="accent">four questions</span></h2>
+      <div class="discussion">
+        <div class="q-card">
+          <div class="q-num">Question 01</div>
+          <p>Where did agents agree? Where did they disagree — and why might that be?</p>
+        </div>
+        <div class="q-card">
+          <div class="q-num">Question 02</div>
+          <p>What data is missing from this analysis? What would you add to improve it?</p>
+        </div>
+        <div class="q-card">
+          <div class="q-num">Question 03</div>
+          <p>Where could this pipeline go wrong? What would a bad output look like?</p>
+        </div>
+        <div class="q-card">
+          <div class="q-num">Question 04</div>
+          <p>How would you adapt this CLAUDE.md pattern to a project in your own domain?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slides -->
+
+<!-- Navigation -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" title="Previous (←)">←</button>
+  <div id="counter">1 / 13</div>
+  <button class="nav-btn" id="btn-next" onclick="navigate(1)" title="Next (→)">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let animating = false;
+
+function navigate(dir) {
+  if (animating) return;
+  const next = current + dir;
+  if (next < 0 || next >= total) return;
+
+  animating = true;
+  const outSlide = slides[current];
+  const inSlide = slides[next];
+
+  outSlide.classList.add('exit');
+  outSlide.classList.remove('active');
+
+  // Reset position of incoming slide
+  inSlide.style.transform = dir > 0 ? 'translateX(50px)' : 'translateX(-50px)';
+  inSlide.style.opacity = '0';
+  inSlide.style.pointerEvents = 'none';
+
+  // Force reflow
+  inSlide.offsetHeight;
+
+  inSlide.style.transition = '';
+  inSlide.classList.add('active');
+  inSlide.style.transform = '';
+  inSlide.style.opacity = '';
+  inSlide.style.pointerEvents = '';
+
+  current = next;
+  updateUI();
+
+  setTimeout(() => {
+    outSlide.classList.remove('exit');
+    animating = false;
+  }, 500);
+}
+
+function updateUI() {
+  document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === total - 1;
+
+  const progress = ((current + 1) / total) * 100;
+  document.getElementById('progress').style.width = progress + '%';
+
+  const label = slides[current].dataset.section || '';
+  document.getElementById('section-label').textContent = label;
+  document.getElementById('section-label').style.opacity = label ? '1' : '0';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault(); navigate(1);
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault(); navigate(-1);
+  }
+});
+
+// Swipe support
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+</body>
+</html>

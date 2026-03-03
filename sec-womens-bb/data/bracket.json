@@ -1,0 +1,196 @@
+{
+  "season": "2025-26",
+  "tournament": "SEC Women's Basketball Tournament",
+  "seedings_as_of": "2026-03-01",
+  "note": "Official seeds sourced from secsports.com bracket (March 1, 2026). SEC uses H2H results as primary tiebreaker among teams with equal conference records.",
+  "seeds": {
+    "1": "South Carolina",
+    "2": "Vanderbilt",
+    "3": "Texas",
+    "4": "LSU",
+    "5": "Oklahoma",
+    "6": "Tennessee",
+    "7": "Ole Miss",
+    "8": "Georgia",
+    "9": "Kentucky",
+    "10": "Texas A&M",
+    "11": "Alabama",
+    "12": "Florida",
+    "13": "Mississippi State",
+    "14": "Missouri",
+    "15": "Auburn",
+    "16": "Arkansas"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "name": "First Round",
+      "date": "2026-03-04",
+      "games": [
+        {
+          "game_id": "G1",
+          "time": "11:00 AM EST",
+          "network": "SEC Network",
+          "higher_seed": 9,
+          "lower_seed": 16
+        },
+        {
+          "game_id": "G2",
+          "time": "1:30 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 12,
+          "lower_seed": 13
+        },
+        {
+          "game_id": "G3",
+          "time": "6:00 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 10,
+          "lower_seed": 15
+        },
+        {
+          "game_id": "G4",
+          "time": "8:30 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 11,
+          "lower_seed": 14
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "name": "Second Round",
+      "date": "2026-03-05",
+      "games": [
+        {
+          "game_id": "G5",
+          "time": "11:00 AM EST",
+          "network": "SEC Network",
+          "higher_seed": 8,
+          "lower_seed": null,
+          "fed_by": [
+            "G1"
+          ]
+        },
+        {
+          "game_id": "G6",
+          "time": "1:30 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 5,
+          "lower_seed": null,
+          "fed_by": [
+            "G2"
+          ]
+        },
+        {
+          "game_id": "G7",
+          "time": "6:00 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 7,
+          "lower_seed": null,
+          "fed_by": [
+            "G3"
+          ]
+        },
+        {
+          "game_id": "G8",
+          "time": "8:30 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 6,
+          "lower_seed": null,
+          "fed_by": [
+            "G4"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "name": "Quarterfinals",
+      "date": "2026-03-06",
+      "games": [
+        {
+          "game_id": "G9",
+          "time": "12:00 PM EST",
+          "network": "ESPN",
+          "higher_seed": 1,
+          "lower_seed": null,
+          "fed_by": [
+            "G5"
+          ]
+        },
+        {
+          "game_id": "G10",
+          "time": "2:30 PM EST",
+          "network": "ESPN",
+          "higher_seed": 4,
+          "lower_seed": null,
+          "fed_by": [
+            "G6"
+          ]
+        },
+        {
+          "game_id": "G11",
+          "time": "6:00 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 2,
+          "lower_seed": null,
+          "fed_by": [
+            "G7"
+          ]
+        },
+        {
+          "game_id": "G12",
+          "time": "8:30 PM EST",
+          "network": "SEC Network",
+          "higher_seed": 3,
+          "lower_seed": null,
+          "fed_by": [
+            "G8"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "name": "Semifinals",
+      "date": "2026-03-07",
+      "games": [
+        {
+          "game_id": "G13",
+          "time": "4:30 PM EST",
+          "network": "ESPN2",
+          "fed_by": [
+            "G9",
+            "G10"
+          ]
+        },
+        {
+          "game_id": "G14",
+          "time": "7:00 PM EST",
+          "network": "ESPN2",
+          "fed_by": [
+            "G11",
+            "G12"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "name": "Championship",
+      "date": "2026-03-08",
+      "games": [
+        {
+          "game_id": "G15",
+          "time": "3:00 PM EDT",
+          "network": "ESPN",
+          "fed_by": [
+            "G13",
+            "G14"
+          ]
+        }
+      ]
+    }
+  ]
+}

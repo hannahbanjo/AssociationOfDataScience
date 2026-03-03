@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2026 SEC Women's Basketball Tournament Preview</title>
+<style>
+:root {
+  --gold: #c8860a;
+  --gold-light: #e8a020;
+  --text: #1a1a1a;
+  --muted: #555;
+  --dim: #888;
+  --border: #ddd;
+  --surface: #f9f8f6;
+  --surface2: #f2f0ec;
+  --accent-bg: #fdf8ee;
+  --high: #1a6b2a;
+  --med: #1a4a8a;
+  --low: #7a3a00;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11pt;
+  line-height: 1.7;
+  color: var(--text);
+  background: #fff;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+}
+
+/* ── Header ── */
+.doc-header {
+  border-bottom: 3px solid var(--text);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+.doc-tag {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.doc-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.doc-meta {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  color: var(--dim);
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.doc-meta span::before { content: '· '; color: var(--gold); }
+.doc-meta span:first-child::before { content: ''; }
+
+/* ── Section headings ── */
+h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+h2:first-of-type { margin-top: 0; }
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 1.75rem 0 0.5rem;
+}
+
+/* ── Field-at-a-glance table ── */
+.field-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  margin: 1rem 0 1.5rem;
+}
+.field-table th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 2px solid var(--border);
+  padding: 0.4rem 0.6rem;
+}
+.field-table td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+.field-table tr:last-child td { border-bottom: none; }
+.tier-label {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.15em 0.5em; border-radius: 2px;
+}
+.tier-c { background: #fdf3e0; color: var(--gold); }
+.tier-ch { background: #e8f0fb; color: #1a4a8a; }
+.tier-b { background: #f2f2f2; color: #555; }
+.tier-l { background: #f7f7f7; color: #999; }
+
+/* ── Divider ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+
+/* ── Game blocks ── */
+.game-block {
+  background: var(--surface);
+  border-left: 3px solid var(--border);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.game-header {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 0.3rem;
+}
+.game-pick {
+  font-size: 0.92rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.5rem;
+}
+.game-body { font-size: 0.82rem; line-height: 1.6; color: #333; }
+.conf-high { color: var(--high); font-weight: 700; }
+.conf-med { color: var(--med); font-weight: 700; }
+.conf-low { color: var(--low); font-weight: 700; }
+
+/* ── Bracket summary table ── */
+.picks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  margin: 1rem 0;
+}
+.picks-table th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 2px solid var(--border);
+  padding: 0.4rem 0.6rem;
+}
+.picks-table td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+.picks-table tr:last-child td { border-bottom: none; }
+.picks-table .round-group td { background: var(--surface); }
+
+/* ── Bracket ASCII ── */
+.bracket-block {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ── Stat tables ── */
+.stat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  margin: 0.75rem 0 1.5rem;
+}
+.stat-table th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 2px solid var(--border);
+  padding: 0.4rem 0.6rem;
+}
+.stat-table td {
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+.stat-table tr:first-child td { font-weight: 700; color: var(--gold); }
+.stat-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.stat-table th:last-child { text-align: right; }
+
+/* ── Callout ── */
+.callout {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--gold-light);
+  padding: 0.85rem 1.1rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+/* ── Upset cards ── */
+.upset-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.upset-label {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.3rem;
+}
+.upset-pick { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.4rem; }
+.upset-body { font-size: 0.8rem; line-height: 1.6; color: #444; }
+
+/* ── Data note ── */
+.data-note {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* ── Footer ── */
+.doc-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.68rem;
+  color: var(--dim);
+  display: flex; justify-content: space-between;
+}
+
+/* ── Print ── */
+@media print {
+  body { padding: 0; font-size: 10pt; }
+  .game-block, .upset-card { break-inside: avoid; }
+  h2 { break-before: auto; }
+  .bracket-block { font-size: 0.65rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">SEC Women's Basketball Tournament · 2025–26 Season</div>
+  <div class="doc-title">2026 SEC Women's Basketball<br>Tournament Preview</div>
+  <div class="doc-meta">
+    <span>Greenville, SC</span>
+    <span>March 4–8, 2026</span>
+    <span>Bon Secours Wellness Arena</span>
+    <span>Generated 2026-02-27</span>
+  </div>
+</div>
+
+<!-- ── THE FIELD ── -->
+<h2>The Field at a Glance</h2>
+
+<table class="field-table">
+  <thead>
+    <tr><th>Tier</th><th>Seed</th><th>Team</th><th>Record</th><th>Conf.</th><th>Net Eff.</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><span class="tier-label tier-c">Contenders</span></td><td>1</td><td><strong>South Carolina</strong></td><td>28-2</td><td>14-1</td><td>+42.5</td></tr>
+    <tr><td><span class="tier-label tier-c">Contenders</span></td><td>2</td><td><strong>Texas</strong></td><td>27-3</td><td>12-3</td><td>+40.6</td></tr>
+    <tr><td><span class="tier-label tier-c">Contenders</span></td><td>3</td><td><strong>Vanderbilt</strong></td><td>26-3</td><td>12-3</td><td>+28.0</td></tr>
+    <tr><td><span class="tier-label tier-c">Contenders</span></td><td>4</td><td><strong>LSU</strong></td><td>25-4</td><td>11-4</td><td><strong>+45.8</strong></td></tr>
+    <tr><td><span class="tier-label tier-ch">Challengers</span></td><td>5</td><td>Oklahoma</td><td>22-6</td><td>10-5</td><td>+25.7</td></tr>
+    <tr><td><span class="tier-label tier-ch">Challengers</span></td><td>6</td><td>Kentucky</td><td>21-8</td><td>8-7</td><td>+24.2</td></tr>
+    <tr><td><span class="tier-label tier-ch">Challengers</span></td><td>7</td><td>Tennessee</td><td>16-11</td><td>8-7</td><td>+11.7</td></tr>
+    <tr><td><span class="tier-label tier-ch">Challengers</span></td><td>8</td><td>Ole Miss</td><td>21-9</td><td>8-7</td><td>+21.1</td></tr>
+    <tr><td><span class="tier-label tier-b">Bubble</span></td><td>9</td><td>Alabama</td><td>21-8</td><td>7-8</td><td>+14.1</td></tr>
+    <tr><td><span class="tier-label tier-b">Bubble</span></td><td>10</td><td>Georgia</td><td>21-8</td><td>7-8</td><td>+18.0</td></tr>
+    <tr><td><span class="tier-label tier-b">Bubble</span></td><td>11</td><td>Texas A&amp;M</td><td>13-11</td><td>6-9</td><td>−3.6</td></tr>
+    <tr><td><span class="tier-label tier-b">Bubble</span></td><td>12</td><td>Mississippi State</td><td>18-11</td><td>5-10</td><td>+12.5</td></tr>
+    <tr><td><span class="tier-label tier-b">Bubble</span></td><td>13</td><td>Florida</td><td>17-13</td><td>5-10</td><td>+10.3</td></tr>
+    <tr><td><span class="tier-label tier-l">Longshots</span></td><td>14</td><td>Missouri</td><td>16-14</td><td>4-11</td><td>−5.0</td></tr>
+    <tr><td><span class="tier-label tier-l">Longshots</span></td><td>15</td><td>Auburn</td><td>14-15</td><td>3-12</td><td>−3.5</td></tr>
+    <tr><td><span class="tier-label tier-l">Longshots</span></td><td>16</td><td>Arkansas</td><td>11-19</td><td>0-15</td><td>−7.6</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">LSU (seed 4) posts the highest Net Efficiency in the field at +45.8 — higher than #1 South Carolina (+42.5). This is the defining anomaly of the 2026 tournament.</div>
+
+<!-- ── STORYLINES ── -->
+<h2>Storylines to Watch</h2>
+
+<h3>1. The LSU Seed Anomaly: The Best Team in the Field Is the Fourth Seed</h3>
+<p>By every efficiency metric — Net Efficiency (+45.8, best in field), ORtg (121.8, best in field), and SRS (46.93, second in field) — LSU is the best or second-best team in Greenville. They are seeded fourth because their conference record (11-4) trails the 12-3 marks of Texas and Vanderbilt. The catch: LSU's SOS of 11.11 is the second-lowest in the field. Two agents in this pipeline reach conflicting conclusions on the LSU-vs.-South Carolina semifinal. That disagreement is not reconciled here — it is the right question, and it will be answered on the court.</p>
+
+<h3>2. Tennessee's Ticking Clock: The Most Overseeded Team in the Field</h3>
+<p>Tennessee is a 7-seed with the statistical profile of an 11. Net Efficiency (+11.7) is the lowest of any team seeded 1–8. Their DRtg (89.8) is the worst among top-eight seeds. The defense: they played the hardest schedule in the entire field (SOS 19.77). But schedule credit evaporates at tipoff. Their three-point dependency (3PAr .457 — highest in the field) makes them one cold-shooting game away from elimination. Georgia in the Second Round will test them immediately.</p>
+
+<h3>3. Georgia's Quiet Case for a Semifinal Run</h3>
+<p>Georgia is a 10-seed that no one is talking about. Net Efficiency (+18.0) ranks eighth in the field — ahead of Tennessee, Alabama, and every other team seeded below them. DRtg (84.5) is the best of any team outside the top six seeds. The caveat: SOS (10.89) is second-lowest in the field. Both things are true simultaneously.</p>
+
+<h3>4. South Carolina vs. Texas: The Championship Game No One Should Argue With</h3>
+<p>South Carolina (ORtg 118.6, DRtg 76.1) and Texas (ORtg 116.3, DRtg 75.7) are statistically indistinguishable. The Net Efficiency gap is 1.9 points. Both teams lead the field in defensive efficiency and play interior-dominant basketball at identical paces. The Matchup Analyst gives South Carolina the edge solely on shooting efficiency (.587 vs. .559 TS%). Sub-Agent 2 calls it "a coin flip." This report agrees with both.</p>
+
+<!-- ── FIRST ROUND ── -->
+<h2>First Round · March 4</h2>
+<p style="font-size:0.8rem; color:var(--dim); font-family:sans-serif; margin-bottom:0.5rem">Seeds 1–8 have first-round byes. All games on SEC Network.</p>
+
+<div class="game-block">
+  <div class="game-header">G1 · 11:00 AM EST · (9) Alabama vs. (16) Arkansas</div>
+  <div class="game-pick">Pick: Alabama &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Arkansas went 0-15 in conference play. Net Efficiency gap: 21.7 points per 100 possessions. Alabama wins comfortably.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G2 · 1:30 PM EST · (12) Mississippi State vs. (13) Florida</div>
+  <div class="game-pick">Pick: Mississippi State &nbsp;<span class="conf-low">Confidence: Low</span></div>
+  <div class="game-body">Tightest game of the first round. Net Efficiency gap: 2.2 points. Mississippi State's ORB% (37.7% vs. 34.9%) is the structural edge. Florida is a live underdog — treat with caution.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G3 · 6:00 PM EST · (10) Georgia vs. (15) Auburn</div>
+  <div class="game-pick">Pick: Georgia &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Auburn's ORtg (86.5) is the worst in the field. Georgia wins going away across every efficiency dimension.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G4 · 8:30 PM EST · (11) Texas A&amp;M vs. (14) Missouri</div>
+  <div class="game-pick">Pick: Texas A&amp;M &nbsp;<span class="conf-med">Confidence: Medium</span></div>
+  <div class="game-body">Missouri shoots far better (.557 TS%) but allows opponents to score at will (DRtg 103.7). Texas A&amp;M's defensive edge wins. Caveat: Texas A&amp;M played only 24 games — smallest sample in field.</div>
+</div>
+
+<!-- ── SECOND ROUND ── -->
+<h2>Second Round · March 5</h2>
+<p style="font-size:0.8rem; color:var(--dim); font-family:sans-serif; margin-bottom:0.5rem">All games on SEC Network.</p>
+
+<div class="game-block">
+  <div class="game-header">G5 · 11:00 AM EST · (8) Ole Miss vs. (9) Alabama</div>
+  <div class="game-pick">Pick: Ole Miss &nbsp;<span class="conf-med">Confidence: Medium-High</span></div>
+  <div class="game-body">Ole Miss leads in Net Efficiency (+7.0), DRtg (84.3 vs. 87.9), TOV% (16.0% vs. 18.4%), and ORB% (40.4% vs. 31.3%). Alabama's shooting edge keeps them live.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G6 · 1:30 PM EST · (5) Oklahoma vs. (12) Mississippi State</div>
+  <div class="game-pick">Pick: Oklahoma &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Oklahoma's advantages are comprehensive. Net Efficiency gap: 13.2 points. Their pace (80.7 — fastest in field) forces a transition game Mississippi State cannot match.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G7 · 6:00 PM EST · (7) Tennessee vs. (10) Georgia</div>
+  <div class="game-pick">Pick: Georgia &nbsp;<span class="conf-med">Confidence: Medium</span></div>
+  <div class="game-body">Biggest seed-versus-metrics misalignment in the bracket. Georgia leads in Net Efficiency (+6.3), DRtg (84.5 vs. 89.8), and TS% (.538 vs. .507). Tennessee's SOS (19.77 vs. 10.89) is the legitimate counter — schedule credit that evaporates at tipoff.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G8 · 8:30 PM EST · (6) Kentucky vs. (11) Texas A&amp;M</div>
+  <div class="game-pick">Pick: Kentucky &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Kentucky's Net Efficiency advantage: 27.8 points — second-largest gap of any matchup in the bracket. Kentucky wins comfortably.</div>
+</div>
+
+<!-- ── QUARTERFINALS ── -->
+<h2>Quarterfinals · March 6</h2>
+<p style="font-size:0.8rem; color:var(--dim); font-family:sans-serif; margin-bottom:0.5rem">Seeds 1 and 2 enter here.</p>
+
+<div class="game-block">
+  <div class="game-header">G9 · 12:00 PM EST · ESPN · (1) South Carolina vs. (8) Ole Miss</div>
+  <div class="game-pick">Pick: South Carolina &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">South Carolina's ORtg (118.6) is 13.2 points better per 100 possessions than Ole Miss's defense can contain. Net Efficiency advantage: 21.4 points.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G10 · 2:30 PM EST · ESPN · (4) LSU vs. (5) Oklahoma</div>
+  <div class="game-pick">Pick: LSU &nbsp;<span class="conf-med">Confidence: Medium</span></div>
+  <div class="game-body">LSU's ORB% (48.8%) is the defining number — when you recover half your own misses, your offense doesn't need to be perfect. Oklahoma's DRtg (81.4) and higher SOS are the counter. LSU's ceiling is simply too high to suppress.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G11 · 6:00 PM EST · SEC Network · (2) Texas vs. (10) Georgia</div>
+  <div class="game-pick">Pick: Texas &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Texas's DRtg (75.7 — best in field) holds Georgia well below their seasonal average. Texas's ORB% (41.0% vs. 30.6%) dominates the glass. Texas wins by double digits.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G12 · 8:30 PM EST · SEC Network · (3) Vanderbilt vs. (6) Kentucky</div>
+  <div class="game-pick">Pick: Vanderbilt &nbsp;<span class="conf-med">Confidence: Medium</span></div>
+  <div class="game-body">Net Efficiency lead: 3.8 points. Vanderbilt's ORtg (115.6) beats Kentucky's (109.0) by 6.6 points — an offensive edge Kentucky's defense cannot fully absorb. Kentucky is the most likely quarterfinal upset.</div>
+</div>
+
+<!-- ── SEMIFINALS ── -->
+<h2>Semifinals · March 7 · ESPN2</h2>
+
+<div class="game-block">
+  <div class="game-header">G13 · 4:30 PM EST · (1) South Carolina vs. (4) LSU</div>
+  <div class="game-pick">Pick: South Carolina &nbsp;<span class="conf-low">Confidence: Low</span></div>
+  <div class="game-body">The headline game of the tournament. LSU has the best raw profile in Greenville by Net Efficiency (+45.8), ORtg (121.8), and ORB% (48.8%). South Carolina's SOS-adjusted advantage (16.66 vs. 11.11) is the only structural counter. Sub-Agent 3 picks South Carolina. Sub-Agent 4 calls it "essentially a coin flip" and refuses to resolve the disagreement. This report picks South Carolina — while acknowledging LSU wins this often enough to make the pick feel arbitrary. LSU's ORB% (48.8% vs. 40.4%) is the X-factor.</div>
+</div>
+
+<div class="game-block">
+  <div class="game-header">G14 · 7:00 PM EST · (2) Texas vs. (3) Vanderbilt</div>
+  <div class="game-pick">Pick: Texas &nbsp;<span class="conf-high">Confidence: High</span></div>
+  <div class="game-body">Texas's DRtg (75.7) is 11.9 points better than Vanderbilt's — the largest defensive advantage in any semifinal. Vanderbilt's offense (ORtg 115.6) is exceptional but cannot sustain itself against the best defense in the field. Texas wins by 8–12.</div>
+</div>
+
+<!-- ── CHAMPIONSHIP ── -->
+<h2>Championship · March 8 · ESPN · 3:00 PM EDT</h2>
+
+<div class="game-block" style="border-left-color: var(--gold);">
+  <div class="game-header">G15 · (1) South Carolina vs. (2) Texas</div>
+  <div class="game-pick" style="font-size:1.05rem">Pick: <strong>South Carolina wins the 2026 SEC Tournament — 62-58</strong> &nbsp;<span class="conf-low">Confidence: Low</span></div>
+  <div class="game-body">
+    <br>
+    <strong>The numbers side by side:</strong><br>
+    &nbsp;&nbsp;ORtg: South Carolina 118.6 · Texas 116.3 (SC +2.3)<br>
+    &nbsp;&nbsp;DRtg: Texas 75.7 · South Carolina 76.1 (Texas +0.4)<br>
+    &nbsp;&nbsp;Net Efficiency: South Carolina +42.5 · Texas +40.6 (SC +1.9)<br>
+    &nbsp;&nbsp;TS%: South Carolina 58.7% · Texas 55.9% (SC +2.8 pts)<br>
+    &nbsp;&nbsp;SOS: 16.66 · 16.39 · Pace: 73.9 · 73.7<br><br>
+    Every number points to the same conclusion: these teams are functionally equal. The tiebreaker is South Carolina's shooting efficiency (.587 TS% — largest individual edge between them). Confidence is Low. This is not a failure of analysis. It is the correct result when two equally elite programs meet in single elimination. Texas is fully capable of winning this championship.
+  </div>
+</div>
+
+<!-- ── BRACKET SUMMARY ── -->
+<h2>Bracket Picks Summary</h2>
+
+<div class="bracket-block">FIRST ROUND (Mar 4)         SECOND ROUND (Mar 5)       QUARTERFINALS (Mar 6)
+─────────────────────────   ─────────────────────────   ─────────────────────────
+(9)  Alabama     ──┐
+                   ├─ Alabama ──┐
+(16) Arkansas    ──┘            │
+                                ├─ Ole Miss ────┐
+(8)  Ole Miss ─────────────────┘               │
+                                                ├─ South Carolina
+(12) Miss. State ──┐                            │
+                   ├─ Miss. State ──┐           │
+(13) Florida     ──┘               │           │
+                                   ├─ Oklahoma ─┘
+(5)  Oklahoma ─────────────────────┘
+─────────────────────────
+(10) Georgia     ──┐
+                   ├─ Georgia ──┐
+(15) Auburn      ──┘            │
+                                ├─ Georgia ─────┐
+(7)  Tennessee ─────────────────┘              │
+                                                ├─ Texas
+(11) Texas A&M   ──┐                            │
+                   ├─ Texas A&M ──┐             │
+(14) Missouri    ──┘              │             │
+                                  ├─ Kentucky ──┘
+(6)  Kentucky ────────────────────┘
+
+─────────────────────────────────────────────────────────────────────
+SEMIFINALS (Mar 7)            CHAMPIONSHIP (Mar 8)
+─────────────────────────     ───────────────────────────
+South Carolina ──┐
+                 ├─ South Carolina ──┐
+LSU ─────────────┘                  │
+                                    ├── SOUTH CAROLINA ◀ CHAMPION
+Texas ───────────┐                  │
+                 ├─ Texas ───────────┘
+Vanderbilt ──────┘</div>
+
+<table class="picks-table">
+  <thead><tr><th>Round</th><th>Matchup</th><th>Pick</th><th>Confidence</th></tr></thead>
+  <tbody>
+    <tr><td>First Round</td><td>(9) Alabama vs. (16) Arkansas</td><td><strong>Alabama</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>First Round</td><td>(12) Mississippi State vs. (13) Florida</td><td><strong>Mississippi State</strong></td><td><span class="conf-low">Low</span></td></tr>
+    <tr><td>First Round</td><td>(10) Georgia vs. (15) Auburn</td><td><strong>Georgia</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>First Round</td><td>(11) Texas A&amp;M vs. (14) Missouri</td><td><strong>Texas A&amp;M</strong></td><td><span class="conf-med">Medium</span></td></tr>
+    <tr><td>Second Round</td><td>(8) Ole Miss vs. (9) Alabama</td><td><strong>Ole Miss</strong></td><td><span class="conf-med">Medium-High</span></td></tr>
+    <tr><td>Second Round</td><td>(5) Oklahoma vs. (12) Mississippi State</td><td><strong>Oklahoma</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>Second Round</td><td>(7) Tennessee vs. (10) Georgia</td><td><strong>Georgia ⚡</strong></td><td><span class="conf-med">Medium</span></td></tr>
+    <tr><td>Second Round</td><td>(6) Kentucky vs. (11) Texas A&amp;M</td><td><strong>Kentucky</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>Quarterfinals</td><td>(1) South Carolina vs. (8) Ole Miss</td><td><strong>South Carolina</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>Quarterfinals</td><td>(4) LSU vs. (5) Oklahoma</td><td><strong>LSU</strong></td><td><span class="conf-med">Medium</span></td></tr>
+    <tr><td>Quarterfinals</td><td>(2) Texas vs. (10) Georgia</td><td><strong>Texas</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>Quarterfinals</td><td>(3) Vanderbilt vs. (6) Kentucky</td><td><strong>Vanderbilt</strong></td><td><span class="conf-med">Medium</span></td></tr>
+    <tr><td>Semifinals</td><td>(1) South Carolina vs. (4) LSU</td><td><strong>South Carolina</strong></td><td><span class="conf-low">Low</span></td></tr>
+    <tr><td>Semifinals</td><td>(2) Texas vs. (3) Vanderbilt</td><td><strong>Texas</strong></td><td><span class="conf-high">High</span></td></tr>
+    <tr><td>Championship</td><td>(1) South Carolina vs. (2) Texas</td><td><strong>South Carolina 🏆</strong></td><td><span class="conf-low">Low</span></td></tr>
+  </tbody>
+</table>
+
+<p><strong>Projected Final Four:</strong> South Carolina · LSU · Texas · Vanderbilt</p>
+
+<!-- ── UPSET ALERTS ── -->
+<h2>Upset Alert</h2>
+
+<div class="upset-card">
+  <div class="upset-label">Upset Pick No. 1 · Sub-Agent 4 Rating: HIGH</div>
+  <div class="upset-pick">Georgia (10) over Tennessee (7) — Second Round</div>
+  <div class="upset-body">Georgia's Net Efficiency (+18.0) beats Tennessee's (+11.7) by 6.3 points. DRtg advantage: 5.3 points (84.5 vs. 89.8). Tennessee is a 7-seed with an 11th-ranked efficiency profile. The bracket calls this an upset. The numbers have called Georgia the better team all season.</div>
+</div>
+
+<div class="upset-card">
+  <div class="upset-label">Upset Pick No. 2 · Structural Bracket Buster</div>
+  <div class="upset-pick">LSU (4) Runs to the Championship</div>
+  <div class="upset-body">Net Efficiency +45.8 (best in field). ORtg 121.8 (best in field). ORB% 48.8% (best in field by a wide margin). LSU is the 4-seed. LSU has the best efficiency profile. Both true. Their offensive rebounding is a structural weapon no team in this field has an answer for.</div>
+</div>
+
+<div class="upset-card">
+  <div class="upset-label">Upset Pick No. 3 · Sub-Agent 4 Rating: MEDIUM</div>
+  <div class="upset-pick">Mississippi State (12) over Oklahoma (5) — Second Round</div>
+  <div class="upset-body">Style mismatch: Mississippi State is a slow half-court team (73.4 pace). Oklahoma wants to run (80.7 — fastest in field). In single elimination, a disciplined slower team can drag a faster team into a grind. MSU's ORB% (37.7%) provides the mechanism.</div>
+</div>
+
+<!-- ── STAT LEADERS ── -->
+<h2>Statistical Leaders</h2>
+
+<h3>Offensive Efficiency (ORtg)</h3>
+<table class="stat-table">
+  <thead><tr><th>Rank</th><th>Team</th><th>Seed</th><th>ORtg</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>LSU</td><td>4</td><td>121.8</td></tr>
+    <tr><td>2</td><td>South Carolina</td><td>1</td><td>118.6</td></tr>
+    <tr><td>3</td><td>Texas</td><td>2</td><td>116.3</td></tr>
+    <tr><td>4</td><td>Vanderbilt</td><td>3</td><td>115.6</td></tr>
+    <tr><td>5</td><td>Kentucky</td><td>6</td><td>109.0</td></tr>
+  </tbody>
+</table>
+
+<h3>Defensive Efficiency (DRtg — lower is better)</h3>
+<table class="stat-table">
+  <thead><tr><th>Rank</th><th>Team</th><th>Seed</th><th>DRtg</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Texas</td><td>2</td><td>75.7</td></tr>
+    <tr><td>2</td><td>LSU</td><td>4</td><td>76.0</td></tr>
+    <tr><td>3</td><td>South Carolina</td><td>1</td><td>76.1</td></tr>
+    <tr><td>4</td><td>Oklahoma</td><td>5</td><td>81.4</td></tr>
+    <tr><td>5</td><td>Ole Miss</td><td>8</td><td>84.3</td></tr>
+  </tbody>
+</table>
+
+<h3>Net Efficiency (ORtg − DRtg)</h3>
+<table class="stat-table">
+  <thead><tr><th>Rank</th><th>Team</th><th>Seed</th><th>Net</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>LSU</td><td>4</td><td>+45.8</td></tr>
+    <tr><td>2</td><td>South Carolina</td><td>1</td><td>+42.5</td></tr>
+    <tr><td>3</td><td>Texas</td><td>2</td><td>+40.6</td></tr>
+    <tr><td>4</td><td>Vanderbilt</td><td>3</td><td>+28.0</td></tr>
+    <tr><td>5</td><td>Oklahoma</td><td>5</td><td>+25.7</td></tr>
+  </tbody>
+</table>
+
+<!-- ── DATA NOTE ── -->
+<div class="data-note">
+  <strong>Data Note:</strong> All statistics from <code>data/sec_teams.csv</code>, generated by scraping Sports Reference's 2025-26 Women's Advanced School Stats and Advanced Opponent Stats pages (scraped 2026-02-27). DRtg derived from opponent ORtg allowed. Tournament seedings from <code>data/bracket.json</code>, derived from conference win percentage with SRS as tiebreaker. Texas A&amp;M's 24-game sample (vs. 27–30 for all other teams) flagged as a minor uncertainty. Where Sub-Agents 3 and 4 disagreed, both views are preserved rather than resolved.
+</div>
+
+<div class="doc-footer">
+  <span>Generated by 5-Agent Claude Code Pipeline · 2026-02-27</span>
+  <span>Sub-Agents: Data Gatherer · Team Profiler · Matchup Analyst · Upset Detector · Narrative</span>
+</div>
+
+</body>
+</html>
